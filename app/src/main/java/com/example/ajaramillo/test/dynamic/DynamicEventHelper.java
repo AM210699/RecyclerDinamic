@@ -6,9 +6,9 @@ import android.support.v7.widget.helper.ItemTouchHelper;
 
 public class DynamicEventHelper extends ItemTouchHelper.Callback {
 
-    private DynamicEventHelper callback;
+    private DynamicEventsCallBack callback;
 
-    public DynamicEventHelper(DynamicEventHelper callback) {
+    public DynamicEventHelper(DynamicEventsCallBack callback) {
         this.callback = callback;
     }
 
@@ -32,12 +32,16 @@ public class DynamicEventHelper extends ItemTouchHelper.Callback {
     }
 
     @Override
-    public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder viewHolder1) {
-        return false;
+    public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+        callback.onItemMove(viewHolder.getAdapterPosition(),target.getAdapterPosition());
+
+        return true;
     }
 
     @Override
     public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int i) {
+
+        callback.removeItem(viewHolder.getAdapterPosition());
 
     }
 
